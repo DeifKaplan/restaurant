@@ -48,7 +48,7 @@ public class a {
                 .withId(WaiterId());
     }
 
-    private static WaiterId WaiterId() {
+    public static WaiterId WaiterId() {
         return new WaiterId(waiterIdCounter++);
     }
 

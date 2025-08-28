@@ -18,11 +18,17 @@ public class Cook {
     }
 
     public void assignOrder(OrderId orderId, DomainEventPublisher domainEventPublisher) {
+        if (this.orderId != null) {
+            throw new IllegalStateException("Cook is already assigned to order: " + this.orderId);
+        }
         this.orderId = orderId;
         domainEventPublisher.publish(new OrderInProgress(orderId));
     }
 
     public void completeAssignedOrder() {
+        if (this.orderId == null) {
+            throw new IllegalStateException("Cook has no assigned order to complete.");
+        }
         this.orderId = null;
     }
 
