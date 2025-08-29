@@ -1,0 +1,64 @@
+openapi: 3.0.1
+info:
+  title: Amazon Ingredient API
+  version: 1.0.0
+  description: Fiktiver REST-Endpoint für die Bestellung von Zutaten bei Amazon
+servers:
+  - url: http://localhost:8081
+paths:
+  /amazon/ingredient/order:
+    post:
+      summary: Bestellt eine Zutat in bestimmter Menge
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRequest'
+      responses:
+        '200':
+          description: Bestellung erfolgreich
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supply'
+components:
+  schemas:
+    Ingredient:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    Quantity:
+      type: object
+      properties:
+        amount:
+          type: number
+        unit:
+          type: string
+    OrderItem:
+      type: object
+      properties:
+        ingredient:
+          $ref: '#/components/schemas/Ingredient'
+        quantity:
+          $ref: '#/components/schemas/Quantity'
+    OrderRequest:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+    Supply:
+      type: object
+      properties:
+        ingredient:
+          $ref: '#/components/schemas/Ingredient'
+        quantity:
+          $ref: '#/components/schemas/Quantity'
+        deliveryDate:
+          type: string
+          format: date-time

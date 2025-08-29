@@ -1,6 +1,8 @@
-package ch.kplan.domain;
+package ch.kplan.util;
 
-final class DomainObjectHelper {
+public final class DomainObjectHelper {
+
+    private DomainObjectHelper() {}
 
     public static <T> T createInstance(Class<T> clazz) {
         try {

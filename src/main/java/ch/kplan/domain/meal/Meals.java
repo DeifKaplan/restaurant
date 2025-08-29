@@ -4,14 +4,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
-public record Meals(List<MealId> value) implements Iterable<MealId> {
+public record Meals(List<Meal> value) implements Iterable<Meal> {
 
     @Override
-    public Iterator<MealId> iterator() {
+    public Iterator<Meal> iterator() {
         return value.iterator();
     }
 
-    public Stream<MealId> stream() {
+    public Stream<Meal> stream() {
         return value.stream();
     }
 }

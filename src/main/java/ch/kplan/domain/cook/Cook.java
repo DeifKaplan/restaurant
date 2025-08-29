@@ -12,9 +12,16 @@ public class Cook {
 
     private OrderId orderId;
 
-    public Cook(CookBuilder cookBuilder) {
+    private Cook(CookBuilder cookBuilder) {
         this.id = cookBuilder.id;
         this.orderId = cookBuilder.orderId;
+    }
+
+    public static Cook createNew(CookIdFactory cookIdFactory) {
+        return new CookBuilder()
+                .withId(cookIdFactory.nextId())
+                .withOrderId(null)
+                .build();
     }
 
     public void assignOrder(OrderId orderId, DomainEventPublisher domainEventPublisher) {

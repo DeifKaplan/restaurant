@@ -2,6 +2,10 @@ package ch.kplan.domain;
 
 import ch.kplan.domain.cook.Cook.CookBuilder;
 import ch.kplan.domain.cook.CookId;
+import ch.kplan.domain.ingredient.Ingredient;
+import ch.kplan.domain.ingredient.Quantity;
+import ch.kplan.domain.ingredient.Unit;
+import ch.kplan.domain.meal.Meal.MealBuilder;
 import ch.kplan.domain.meal.MealId;
 import ch.kplan.domain.meal.MealIds;
 import ch.kplan.domain.order.Order.OrderBuilder;
@@ -17,6 +21,7 @@ import java.util.Collections;
 import java.util.HashSet;
 
 import static ch.kplan.domain.table.Table.TableBuilder;
+import static ch.kplan.util.DomainObjectHelper.createInstance;
 
 public class a {
 
@@ -43,7 +48,7 @@ public class a {
     }
 
     public static WaiterBuilder Waiter() {
-        return DomainObjectHelper.createInstance(WaiterBuilder.class)
+        return createInstance(WaiterBuilder.class)
                 .withName("Jane Doe")
                 .withId(WaiterId());
     }
@@ -53,7 +58,7 @@ public class a {
     }
 
     public static TableBuilder Table() {
-        return DomainObjectHelper.createInstance(TableBuilder.class)
+        return createInstance(TableBuilder.class)
                 .withId(TableId())
                 .withNumberOfSeats(4);
     }
@@ -63,7 +68,7 @@ public class a {
     }
 
     public static OrderBuilder Order() {
-        return DomainObjectHelper.createInstance(OrderBuilder.class)
+        return createInstance(OrderBuilder.class)
                 .withId(OrderId())
                 .withStatus(OrderStatus.PENDING)
                 .withTableId(TableId())
@@ -73,11 +78,24 @@ public class a {
     }
 
     public static CookBuilder Cook() {
-        return DomainObjectHelper.createInstance(CookBuilder.class)
+        return createInstance(CookBuilder.class)
                 .withId(CookId());
     }
 
-    private static CookId CookId() {
+    public static CookId CookId() {
         return new CookId(cookIdCounter++);
+    }
+
+    public static MealBuilder Meal() {
+        return createInstance(MealBuilder.class)
+                .mealId(MealId())
+                .name("Spaghetti Napoli")
+                .addIngredient(Ingredient.CHEESE, new Quantity(Unit.GRAM, 30))
+                .addIngredient(Ingredient.PASTA, new Quantity(Unit.GRAM, 100))
+                .addIngredient(Ingredient.GARLIC, new Quantity(Unit.PIECE, 1))
+                .addIngredient(Ingredient.ONION, new Quantity(Unit.PIECE, 1))
+                .addIngredient(Ingredient.OIL, new Quantity(Unit.MILLILITER, 100))
+                .addIngredient(Ingredient.SALT, new Quantity(Unit.GRAM, 5))
+                .addIngredient(Ingredient.TOMATO, new Quantity(Unit.GRAM, 500));
     }
 }

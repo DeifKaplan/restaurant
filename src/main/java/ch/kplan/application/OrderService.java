@@ -2,6 +2,7 @@ package ch.kplan.application;
 
 import ch.kplan.domain.meal.MealIds;
 import ch.kplan.domain.order.Order;
+import ch.kplan.domain.order.OrderId;
 import ch.kplan.domain.order.OrderIdFactory;
 import ch.kplan.domain.order.OrderRepository;
 import ch.kplan.domain.table.TableId;
@@ -31,5 +32,9 @@ public class OrderService {
 
     public Optional<Order> searchNextPendingOrder() {
         return orderRepository.searchNextPendingOrder();
+    }
+
+    public Order getOrder(OrderId orderId) {
+        return orderRepository.get(orderId);
     }
 }
