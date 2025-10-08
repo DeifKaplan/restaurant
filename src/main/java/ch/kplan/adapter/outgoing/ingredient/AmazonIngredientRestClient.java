@@ -4,6 +4,7 @@ import ch.kplan.domain.ingredient.Ingredient;
 import ch.kplan.domain.ingredient.IngredientGateway;
 import ch.kplan.domain.ingredient.Quantity;
 import ch.kplan.domain.ingredient.Supply;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,12 @@ import java.util.Map;
 @Service
 public class AmazonIngredientRestClient implements IngredientGateway {
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
+
+    @Autowired
+    public AmazonIngredientRestClient(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     @Value("${amazon.ingredient.api.url:http://localhost:8081}")
     private String baseUrl;

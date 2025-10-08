@@ -17,35 +17,35 @@ import static org.assertj.core.api.Assertions.assertThat;
 class JpaCookRepositoryComponentTest {
 
     @Autowired
-    private JpaCookRepository repository;
+    private JpaCookRepository sut;
 
     @Test
     void addAndGetCook() {
         Cook cook = a.Cook().build();
 
-        repository.add(cook);
+        sut.add(cook);
 
-        assertThat(repository.get(cook.getId())).usingRecursiveComparison().isEqualTo(cook);
+        assertThat(sut.get(cook.getId())).usingRecursiveComparison().isEqualTo(cook);
     }
 
     @Test
     void updateCook() {
         Cook cook = a.Cook().build();
-        repository.add(cook);
+        sut.add(cook);
 
         cook.assignOrder(new OrderId(99L), o -> {});
-        repository.update(cook);
-        assertThat(repository.get(cook.getId())).usingRecursiveComparison().isEqualTo(cook);
+        sut.update(cook);
+        assertThat(sut.get(cook.getId())).usingRecursiveComparison().isEqualTo(cook);
     }
 
     @Test
     void findIdleCook() {
         Cook idleCook = a.Cook().withOrderId(null).build();
         Cook busyCook = a.Cook().withOrderId(a.OrderId()).build();
-        repository.add(idleCook);
-        repository.add(busyCook);
+        sut.add(idleCook);
+        sut.add(busyCook);
 
-        Optional<Cook> actual = repository.findIdleCook();
+        Optional<Cook> actual = sut.findIdleCook();
 
         assertThat(actual).contains(idleCook);
     }

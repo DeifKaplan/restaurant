@@ -17,7 +17,7 @@ public class FakeAmazonIngredientController {
 
     private int trackingNrCounter = 1;
 
-    private final Map<AmazonIngredientRestClient.OrderRequest, String> trackingNumbers = new HashMap<>();
+    private LocalDate deliveryDate = LocalDate.now().plusDays(1L);
 
     @PostMapping(value = "/order", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Supply order(@RequestBody AmazonIngredientRestClient.OrderRequest request) {
@@ -25,9 +25,15 @@ public class FakeAmazonIngredientController {
         if (request.getItems() == null || request.getItems().isEmpty()) {
             throw new IllegalArgumentException("OrderRequest muss mindestens ein Item enthalten");
         }
-        final String trackingNumber = "TRACK" + (trackingNrCounter++);
-        trackingNumbers.put(request, trackingNumber);
-        return new Supply(LocalDate.now().plusDays(1L), trackingNumber);
+        return new Supply(deliveryDate, "TRACK-" + (trackingNrCounter++));
+    }
+
+    public void setTrackingNrCounter(int trackingNrCounter) {
+        this.trackingNrCounter = trackingNrCounter;
+    }
+
+    public void setDeliveryDate(LocalDate deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 }
 
